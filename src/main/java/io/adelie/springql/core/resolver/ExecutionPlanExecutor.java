@@ -1,13 +1,11 @@
 package io.adelie.springql.core.resolver;
 
 import io.adelie.springql.model.Pair;
-import io.adelie.springql.model.SampleResponse;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import java.util.Collection;
 import java.util.List;
 
 /**
@@ -22,11 +20,13 @@ public class ExecutionPlanExecutor {
             return Mono.empty();
         }
 
-        if(CollectionUtils.isEmpty(executionPlan.getNext())){
+        if (CollectionUtils.isEmpty(executionPlan.getNext())) {
             return (Mono<T>) executionPlan.generateMySelf();
         }
 
+
         Condition condition = executionPlan.getCondition();
+
         //base
         Mono<Object> generate = executionPlan.getMySelf().generate(condition);
 
@@ -38,7 +38,10 @@ public class ExecutionPlanExecutor {
                 .map(i -> {
                     T t1 = (T) i.getT1();
                     i.getT2().stream()
-                            .forEach(j -> j.getKey().setData(t1, j));
+                            .forEach(j -> {
+                                System.out.println(j);
+                                //j.getKey().setData(t1, j);
+                            });
                     return t1;
                 });
     }
