@@ -5,11 +5,15 @@ import reactor.core.publisher.Mono;
 import java.util.Collections;
 import java.util.Map;
 
-public interface Resolver<V> {
+public interface Resolver<Parent, Myself> {
 
     DataType getType();
 
-    Mono<V> generate(Condition condition);
+    Mono<Myself> generate(Condition condition);
+
+    default void setData(Parent parent, Myself myself) {
+
+    }
 
     default Map<String, Class<? extends Resolver>> next() {
         return Collections.emptyMap();

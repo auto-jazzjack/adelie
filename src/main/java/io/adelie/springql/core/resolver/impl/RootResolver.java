@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Component
-public class RootResolver implements Resolver<SampleResponse> {
+public class RootResolver implements Resolver<Void, SampleResponse> {
 
     @Override
     public DataType getType() {
@@ -21,7 +21,9 @@ public class RootResolver implements Resolver<SampleResponse> {
 
     @Override
     public Mono<SampleResponse> generate(Condition condition) {
-        return Mono.empty();
+        return Mono.just(SampleResponse.builder()
+                .time(Long.toString(System.currentTimeMillis()))
+                .build());
     }
 
     @Override

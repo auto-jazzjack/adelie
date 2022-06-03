@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import reactor.core.publisher.Mono;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -17,6 +18,14 @@ public class ExecutionPlan {
     private Resolver mySelf;
     private Map<String, ExecutionPlan> next;
     private Set<String> currFields;
+    private Condition condition;
+
+    /**
+     * This is only helper function generate mySelf
+     */
+    public Mono<Object> generateMySelf() {
+        return this.mySelf.generate(this.condition);
+    }
 
     public void addNext(String key, ExecutionPlan value) {
         if (next == null) {

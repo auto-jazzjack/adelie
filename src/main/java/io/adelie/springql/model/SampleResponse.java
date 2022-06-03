@@ -13,4 +13,5 @@ import java.util.List;
 @NoArgsConstructor
 public class SampleResponse {
     private List<BookStore> bookStores;
+    private String time;
 }
