@@ -42,8 +42,7 @@ public class ExecutionPlanExecutor {
         return Mono.zip(generate, aggregated)
                 .map(i -> {
                     T t1 = (T) i.getT1();
-                    i.getT2().entrySet()
-                            .forEach(j -> Resolver.setData(j.getKey(), t1, j.getValue()));
+                    i.getT2().entrySet().forEach(j -> Resolver.setData(j.getKey(), t1, j.getValue()));
                     return t1;
                 });
     }

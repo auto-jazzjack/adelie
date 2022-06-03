@@ -11,9 +11,21 @@ public class Condition {
 
     private KeyValue root;
 
-    public void changeParent(Object key, Object value, Resolver.DataType dataType) {
+    public void changeRootNode(Object key, Object value, Resolver.DataType dataType) {
         root = KeyValue.of(key, value, dataType);
     }
+
+    public void changeRootNodeKey(Object newKey) {
+        if (root != null && !root.type.equals(Resolver.DataType.SINGLE)) {
+            switch (root.type) {
+                case MAP:
+                case LIST:
+                    root.key = newKey;
+                default:
+            }
+        }
+    }
+
 
     public Object getRoot() {
         if (root == null) {
