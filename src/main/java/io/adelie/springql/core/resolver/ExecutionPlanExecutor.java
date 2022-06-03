@@ -48,7 +48,7 @@ public class ExecutionPlanExecutor {
                 });
     }
 
-    Map<Resolver, Object> aggregateByResolver(List<Pair<Resolver, Object>> list) {
+    private Map<Resolver, Object> aggregateByResolver(List<Pair<Resolver, Object>> list) {
         Map<Resolver, Object> retv = new HashMap<>();
 
         for (Pair<Resolver, Object> j : list) {

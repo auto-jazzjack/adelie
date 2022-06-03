@@ -8,6 +8,8 @@ import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Component
 public class BookResolver implements SingleResolver<BookStore, List<Book>> {
@@ -19,7 +21,17 @@ public class BookResolver implements SingleResolver<BookStore, List<Book>> {
 
     @Override
     public Mono<List<Book>> generate(Condition condition) {
-        return Mono.empty();
+        return Mono.just(Stream.of(
+                        Book.builder()
+                                .title("hello")
+                                .price(80000L)
+                                .build(),
+                        Book.builder()
+                                .title("world")
+                                .price(50000L)
+                                .build()
+                )
+                .collect(Collectors.toList()));
     }
 
 
