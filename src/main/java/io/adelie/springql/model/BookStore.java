@@ -13,4 +13,5 @@ import java.util.List;
 @NoArgsConstructor
 public class BookStore {
     private List<Book> books;
+    private String contact;
 }
