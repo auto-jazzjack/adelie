@@ -1,11 +1,14 @@
 package io.adelie.springql.core.resolver;
 
+import io.adelie.springql.core.resolver.impl.RootResolver;
 import io.adelie.springql.model.Pair;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.Collections;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -17,18 +20,23 @@ public class ExecutionPlanGenerator {
     private final ResolverMapper resolverMapper;
 
     public ExecutionPlan generate(Query query) {
-        return generate(rootResolver, query);
+        ExecutionPlan generate = generate(rootResolver, query);
+        return generate;
     }
 
     private ExecutionPlan generate(Resolver current, Query query) {
 
+        if (current == null) {
+            return null;
+        }
         ExecutionPlan executionPlan = ExecutionPlan.builder()
                 .mySelf(current)
                 .currFields(query.getFields())
                 .build();
 
         //Query resolver에서 value가 not null인 케이스를 돈다
-        Set<String> collect = query.getQueryByResolverName()
+        Set<String> collect = Optional.ofNullable(query.getQueryByResolverName())
+                .orElse(Collections.emptyMap())
                 .entrySet()
                 .stream()
                 .filter(i -> i.getValue() != null)

@@ -11,6 +11,6 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @NoArgsConstructor
-public class SampleResponse {
-    private List<BookStore> bookStores;
+public class BookStore {
+    private List<Book> books;
 }

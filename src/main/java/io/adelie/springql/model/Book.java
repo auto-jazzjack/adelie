@@ -5,12 +5,11 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 @Data
 @AllArgsConstructor
 @Builder
 @NoArgsConstructor
-public class SampleResponse {
-    private List<BookStore> bookStores;
+public class Book {
+    private String title;
+    private Long price;
 }
