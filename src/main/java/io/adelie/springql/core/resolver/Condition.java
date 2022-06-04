@@ -1,6 +1,6 @@
 package io.adelie.springql.core.resolver;
 
-import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 
 import java.util.List;
@@ -11,24 +11,24 @@ public class Condition {
 
     private KeyValue root;
 
-    public void changeRootNode(Object key, Object value, Resolver.DataType dataType) {
-        root = KeyValue.of(key, value, dataType);
-    }
+    public void changeRootNode(Object key, Object value) {
 
-    public void changeRootNodeKey(Object newKey) {
-        if (root != null && !root.type.equals(Resolver.DataType.SINGLE)) {
-            switch (root.type) {
-                case MAP:
-                case LIST:
-                    root.key = newKey;
-                default:
-            }
-        }
+       /* switch (root.type) {
+            case MAP:
+            case LIST:
+                root.key = key;
+                root.value = value;
+                break;
+            default:
+                root.value = value;
+                break;
+        }*/
+
     }
 
 
     public Object getRoot() {
-        if (root == null) {
+       /* if (root == null) {
             return null;
         } else {
             switch (root.type) {
@@ -40,14 +40,24 @@ public class Condition {
                 default:
                     return root.value;
             }
-        }
+        }*/
+        return null;
     }
 
-    @AllArgsConstructor(staticName = "of")
+
     @Data
+    @Builder
     static class KeyValue {
         private Object key;
         private Object value;
-        private Resolver.DataType type;
+        //private Resolver.DataType type;
+
+        public static KeyValue of(Object key, Object value/*, Resolver.DataType type*/) {
+            return KeyValue.builder()
+                    .key(key)
+                    .value(value)
+                    //.type(type)
+                    .build();
+        }
     }
 }

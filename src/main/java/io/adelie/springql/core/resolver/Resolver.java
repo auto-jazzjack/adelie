@@ -3,12 +3,10 @@ package io.adelie.springql.core.resolver;
 import reactor.core.publisher.Mono;
 
 import java.util.Collections;
-import java.util.List;
 import java.util.Map;
 
-public interface Resolver<Myself> {
+public interface Resolver<Parent, Myself> {
 
-    DataType getType();
 
     Mono<Myself> generate(Condition condition);
 
@@ -20,19 +18,5 @@ public interface Resolver<Myself> {
         //do nothing
     }
 
-    enum DataType {
-        LIST,
-        MAP,
-        SINGLE
-    }
-
-    static <P, M> void setData(Resolver<M> resolver, P parent, M data) {
-        if (resolver instanceof MapResolver) {
-            ((MapResolver<P, Object, Object>) resolver).setData(parent, (Map<Object, Object>) data);
-        } else if (resolver instanceof ListResolver) {
-            ((ListResolver<P, Object>) resolver).setData(parent, (List<Object>) data);
-        } else {
-            ((SingleResolver<P, M>) resolver).setData(parent, data);
-        }
-    }
+    void setData(Parent parent, Myself data);
 }
