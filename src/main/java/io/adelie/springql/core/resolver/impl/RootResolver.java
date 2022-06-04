@@ -1,8 +1,7 @@
 package io.adelie.springql.core.resolver.impl;
 
-import io.adelie.springql.core.resolver.Condition;
+import io.adelie.springql.core.resolver.DataFetchingEnv;
 import io.adelie.springql.core.resolver.Resolver;
-import io.adelie.springql.core.resolver.SingleResolver;
 import io.adelie.springql.model.Pair;
 import io.adelie.springql.model.SampleResponse;
 import org.springframework.stereotype.Component;
@@ -13,7 +12,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Component
-public class RootResolver implements SingleResolver<Void, SampleResponse> {
+public class RootResolver implements Resolver<Void, SampleResponse> {
 
     @Override
     public void setData(Void unused, SampleResponse sampleResponse) {
@@ -21,7 +20,7 @@ public class RootResolver implements SingleResolver<Void, SampleResponse> {
     }
 
     @Override
-    public Mono<SampleResponse> generate(Condition condition) {
+    public Mono<SampleResponse> generate(DataFetchingEnv condition) {
         return Mono.just(SampleResponse.builder()
                 .time(Long.toString(System.currentTimeMillis()))
                 .build());

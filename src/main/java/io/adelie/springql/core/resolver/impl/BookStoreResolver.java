@@ -1,6 +1,6 @@
 package io.adelie.springql.core.resolver.impl;
 
-import io.adelie.springql.core.resolver.Condition;
+import io.adelie.springql.core.resolver.DataFetchingEnv;
 import io.adelie.springql.core.resolver.ListResolver;
 import io.adelie.springql.core.resolver.Resolver;
 import io.adelie.springql.model.BookStore;
@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Component
-public class BookStoreResolver implements ListResolver<SampleResponse, BookStore> {
+public class BookStoreResolver implements ListResolver<SampleResponse, List<BookStore>> {
 
     @Override
     public void setData(SampleResponse sampleResponse, List<BookStore> myself) {
@@ -23,10 +23,14 @@ public class BookStoreResolver implements ListResolver<SampleResponse, BookStore
     }
 
     @Override
-    public Mono<BookStore> generate(Condition condition) {
-        return Mono.just(BookStore.builder()
-                .contact("123456")
-                .build());
+    public Mono<List<BookStore>> generate(DataFetchingEnv condition) {
+        return Mono.just(Stream.of(BookStore.builder()
+                        .contact("123456")
+                        .build(),
+                BookStore.builder()
+                        .contact("123456")
+                        .build()
+        ).collect(Collectors.toList()));
     }
 
     @Override
