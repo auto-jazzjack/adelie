@@ -25,7 +25,7 @@ public class DataFetchingEnv {
     }
 
 
-    public Object getRoot() {
+    public Object getConvertedRoot() {
        /* if (root == null) {
             return null;
         } else {

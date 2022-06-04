@@ -18,16 +18,6 @@ import java.util.stream.Collectors;
 @Component
 public class ExecutionPlanExecutor {
 
-    public <T> Mono<T> exec(ExecutionPlan executionPlan, T root) {
-        return this.exec(executionPlan, DataFetchingEnv.KeyValue.of(null, root));
-    }
-
-    private <T> Mono<T> exec(ExecutionPlan executionPlan, DataFetchingEnv.KeyValue root) {
-        executionPlan.getDataFetchingEnv().setRoot(root);
-        return this.exec(executionPlan);
-    }
-
-
     public <T> Mono<T> exec(ExecutionPlan executionPlan) {
         if (executionPlan == null) {
             return Mono.empty();
@@ -48,6 +38,7 @@ public class ExecutionPlanExecutor {
                     tripleFlux = tripleFlux.concatWith(Flux.fromIterable(executionPlan.getNext().entrySet())
                             .flatMap(j -> {
                                 j.getValue().getDataFetchingEnv().setNearRoot(DataFetchingEnv.KeyValue.of(k1, result.get(k1)));
+                                //j.getValue().getDataFetchingEnv().setRoot(executionPlan.getDataFetchingEnv().getRoot());
                                 return this.exec(j.getValue()).map(l -> Triple.of(j.getValue().getMySelf(), k1, l));
                             }));
                 }
@@ -55,21 +46,24 @@ public class ExecutionPlanExecutor {
 
             } else {
                 return Flux.fromIterable(executionPlan.getNext().entrySet())
-                        .flatMap(j -> this.exec(j.getValue()).map(l -> Triple.of(j.getValue().getMySelf(), null, l)));
+                        .flatMap(j -> {
+                            //j.getValue().getDataFetchingEnv().setRoot(executionPlan.getDataFetchingEnv().getRoot());
+                            return this.exec(j.getValue()).map(l -> Triple.of(j.getValue().getMySelf(), null, l));
+                        });
             }
         }).collect(Collectors.toMap(Triple::getMiddle, i -> Pair.of(i.getLeft(), i.getRight())));
 
         return Mono.zip(generate, collect)
                 .map(i -> {
+
                     if (i.getT1() instanceof List) {
                         List<Object> t = (List<Object>) i.getT1();
-                        i.getT2().entrySet()
-                                .forEach(j -> {
-                                    int idx = (Integer) j.getKey();
-                                    j.getValue().getKey().setData(t.get(idx), j.getValue().getValue());
-                                });
+                        i.getT2().forEach((key, value) -> {
+                            int idx = (Integer) key;
+                            value.getKey().setData(t.get(idx), value.getValue());
+                        });
                     } else {
-                        i.getT2().entrySet().forEach(j -> j.getValue().getKey().setData(i.getT1(), j.getValue().getValue()));
+                        i.getT2().forEach((key, value) -> value.getKey().setData(i.getT1(), value.getValue()));
                     }
 
                     return (T) i.getT1();
