@@ -1,6 +1,6 @@
 package io.adelie.springql.core.resolver.impl;
 
-import io.adelie.springql.core.resolver.Condition;
+import io.adelie.springql.core.resolver.DataFetchingEnv;
 import io.adelie.springql.core.resolver.Resolver;
 import io.adelie.springql.model.Pair;
 import io.adelie.springql.model.SampleResponse;
@@ -20,7 +20,7 @@ public class RootResolver implements Resolver<Void, SampleResponse> {
     }
 
     @Override
-    public Mono<SampleResponse> generate(Condition condition) {
+    public Mono<SampleResponse> generate(DataFetchingEnv condition) {
         return Mono.just(SampleResponse.builder()
                 .time(Long.toString(System.currentTimeMillis()))
                 .build());

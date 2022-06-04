@@ -4,7 +4,7 @@ import lombok.Builder;
 import lombok.Data;
 
 @Data
-public class Condition {
+public class DataFetchingEnv {
 
     private KeyValue root;
     private KeyValue nearRoot;

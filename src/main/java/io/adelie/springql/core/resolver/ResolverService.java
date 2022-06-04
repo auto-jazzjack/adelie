@@ -16,6 +16,6 @@ public class ResolverService {
 
     public Mono<SampleResponse> exec(SampleRequest sampleRequest) {
         ExecutionPlan generate = executionPlanGenerator.generate(sampleRequest.getQuery());
-        return executionPlanExecutor.exec(generate);
+        return executionPlanExecutor.exec(generate, new SampleResponse());
     }
 }

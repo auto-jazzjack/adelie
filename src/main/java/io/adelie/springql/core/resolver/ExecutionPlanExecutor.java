@@ -1,14 +1,15 @@
 package io.adelie.springql.core.resolver;
 
 import io.adelie.springql.model.Pair;
+import io.adelie.springql.model.Triple;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * Input) execution plan
@@ -16,6 +17,16 @@ import java.util.Map;
  */
 @Component
 public class ExecutionPlanExecutor {
+
+    public <T> Mono<T> exec(ExecutionPlan executionPlan, T root) {
+        return this.exec(executionPlan, DataFetchingEnv.KeyValue.of(null, root));
+    }
+
+    private <T> Mono<T> exec(ExecutionPlan executionPlan, DataFetchingEnv.KeyValue root) {
+        executionPlan.getDataFetchingEnv().setRoot(root);
+        return this.exec(executionPlan);
+    }
+
 
     public <T> Mono<T> exec(ExecutionPlan executionPlan) {
         if (executionPlan == null) {
@@ -26,61 +37,43 @@ public class ExecutionPlanExecutor {
             return (Mono<T>) executionPlan.generateMySelf();
         }
 
+        Mono<Object> generate = executionPlan.generateMySelf().cache();
 
-        Condition condition = executionPlan.getCondition();
-
-
-        Mono<Object> generate = executionPlan.getMySelf().generate(condition);
-
-        Mono<Map<Resolver, Pair<Object, Object>>> aggregated = Flux.fromIterable(executionPlan.getNext().entrySet())
-                .flatMap(i -> {
-                    return this.exec(i.getValue()).map(j -> Pair.of(i.getValue().getMySelf(), j));
-                })
-                .collectList()
-                .map(this::aggregateByResolver);
-
-        /*Mono<Map<Resolver, Object>> aggregated = generate
-                .flatMapMany(i -> {
-                    return Flux.fromIterable(executionPlan.getNext().entrySet())
+        Mono<Map<Object, Pair<Resolver, Object>>> collect = generate.flatMapMany(i -> {
+            if (executionPlan.getMySelf() instanceof ListResolver) {
+                List<Object> result = (List<Object>) i;
+                Flux<Triple<Resolver, Object, Object>> tripleFlux = Flux.empty();
+                for (int k = 0; k < result.size(); k++) {
+                    final int k1 = k;
+                    tripleFlux = tripleFlux.concatWith(Flux.fromIterable(executionPlan.getNext().entrySet())
                             .flatMap(j -> {
-                                if (condition.getRoot() == null) {
-                                    condition.setRoot(Condition.KeyValue.of(null, i, Resolver.DataType.SINGLE));
-                                }
-                                updateCondition(executionPlan.getMySelf(), condition, null, i);
-                                return this.exec(j.getValue()).map(k -> Pair.of(j.getValue().getMySelf(), k));
-                            });
-                })
-                .collectList()
-                .map(this::aggregateByResolver);*/
+                                j.getValue().getDataFetchingEnv().setNearRoot(DataFetchingEnv.KeyValue.of(k1, result.get(k1)));
+                                return this.exec(j.getValue()).map(l -> Triple.of(j.getValue().getMySelf(), k1, l));
+                            }));
+                }
+                return tripleFlux;
 
-        return Mono.zip(generate, aggregated)
+            } else {
+                return Flux.fromIterable(executionPlan.getNext().entrySet())
+                        .flatMap(j -> this.exec(j.getValue()).map(l -> Triple.of(j.getValue().getMySelf(), null, l)));
+            }
+        }).collect(Collectors.toMap(Triple::getMiddle, i -> Pair.of(i.getLeft(), i.getRight())));
+
+        return Mono.zip(generate, collect)
                 .map(i -> {
-                    T t1 = (T) i.getT1();
-                    if (t1 instanceof List) {
-                        List<Object> t1List = (List<Object>) t1;
+                    if (i.getT1() instanceof List) {
+                        List<Object> t = (List<Object>) i.getT1();
                         i.getT2().entrySet()
                                 .forEach(j -> {
-                                    int idx = (Integer) j.getValue().getKey();
-                                    j.getKey().setData(t1List.get(idx), j.getValue().getValue());
-                                    //j.getKey().setData(t1, j.getValue())
+                                    int idx = (Integer) j.getKey();
+                                    j.getValue().getKey().setData(t.get(idx), j.getValue().getValue());
                                 });
-                        System.out.println();
                     } else {
-                        i.getT2().entrySet().forEach(j -> j.getKey().setData(t1, j.getValue().getValue()));
+                        i.getT2().entrySet().forEach(j -> j.getValue().getKey().setData(i.getT1(), j.getValue().getValue()));
                     }
-                    return t1;
+
+                    return (T) i.getT1();
                 });
-    }
-
-
-    private Map<Resolver, Pair<Object, Object>> aggregateByResolver(List<Pair<Resolver, Object>> list) {
-        Map<Resolver, Pair<Object, Object>> retv = new HashMap<>();
-
-        for (Pair<Resolver, Object> j : list) {
-            retv.put(j.getKey(), Pair.of(0, j.getValue()));
-        }
-        return retv;
 
     }
-
 }

@@ -18,13 +18,13 @@ public class ExecutionPlan {
     private Resolver mySelf;
     private Map<String, ExecutionPlan> next;
     private Set<String> currFields;
-    private Condition condition;
+    private DataFetchingEnv dataFetchingEnv;
 
     /**
      * This is only helper function generate mySelf
      */
     public Mono<Object> generateMySelf() {
-        return this.mySelf.generate(this.condition);
+        return this.mySelf.generate(this.dataFetchingEnv);
     }
 
     public void addNext(String key, ExecutionPlan value) {

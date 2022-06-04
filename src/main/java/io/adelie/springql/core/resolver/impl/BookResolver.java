@@ -1,6 +1,6 @@
 package io.adelie.springql.core.resolver.impl;
 
-import io.adelie.springql.core.resolver.Condition;
+import io.adelie.springql.core.resolver.DataFetchingEnv;
 import io.adelie.springql.core.resolver.Resolver;
 import io.adelie.springql.model.Book;
 import io.adelie.springql.model.BookStore;
@@ -20,7 +20,7 @@ public class BookResolver implements Resolver<BookStore, List<Book>> {
     }
 
     @Override
-    public Mono<List<Book>> generate(Condition condition) {
+    public Mono<List<Book>> generate(DataFetchingEnv condition) {
         return Mono.just(Stream.of(
                         Book.builder()
                                 .title("hello")
