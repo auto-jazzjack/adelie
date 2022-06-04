@@ -32,7 +32,7 @@ public class ExecutionPlanExecutor {
 
         Mono<Object> generate = executionPlan.getMySelf().generate(condition);
 
-        Mono<Map<Resolver, Object>> aggregated = Flux.fromIterable(executionPlan.getNext().entrySet())
+        Mono<Map<Resolver, Pair<Object, Object>>> aggregated = Flux.fromIterable(executionPlan.getNext().entrySet())
                 .flatMap(i -> {
                     return this.exec(i.getValue()).map(j -> Pair.of(i.getValue().getMySelf(), j));
                 })
@@ -56,17 +56,28 @@ public class ExecutionPlanExecutor {
         return Mono.zip(generate, aggregated)
                 .map(i -> {
                     T t1 = (T) i.getT1();
-                    i.getT2().entrySet().forEach(j -> j.getKey().setData(t1, j.getValue()));
+                    if (t1 instanceof List) {
+                        List<Object> t1List = (List<Object>) t1;
+                        i.getT2().entrySet()
+                                .forEach(j -> {
+                                    int idx = (Integer) j.getValue().getKey();
+                                    j.getKey().setData(t1List.get(idx), j.getValue().getValue());
+                                    //j.getKey().setData(t1, j.getValue())
+                                });
+                        System.out.println();
+                    } else {
+                        i.getT2().entrySet().forEach(j -> j.getKey().setData(t1, j.getValue().getValue()));
+                    }
                     return t1;
                 });
     }
 
 
-    private Map<Resolver, Object> aggregateByResolver(List<Pair<Resolver, Object>> list) {
-        Map<Resolver, Object> retv = new HashMap<>();
+    private Map<Resolver, Pair<Object, Object>> aggregateByResolver(List<Pair<Resolver, Object>> list) {
+        Map<Resolver, Pair<Object, Object>> retv = new HashMap<>();
 
         for (Pair<Resolver, Object> j : list) {
-            retv.put(j.getKey(), j.getValue());
+            retv.put(j.getKey(), Pair.of(0, j.getValue()));
         }
         return retv;
 

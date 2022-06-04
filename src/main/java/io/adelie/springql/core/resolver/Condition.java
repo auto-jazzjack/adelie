@@ -3,13 +3,11 @@ package io.adelie.springql.core.resolver;
 import lombok.Builder;
 import lombok.Data;
 
-import java.util.List;
-import java.util.Map;
-
 @Data
 public class Condition {
 
     private KeyValue root;
+    private KeyValue nearRoot;
 
     public void changeRootNode(Object key, Object value) {
 
