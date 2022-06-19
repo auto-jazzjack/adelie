@@ -14,5 +14,6 @@ import java.util.List;
 @Builder
 public class SampleRequest {
     private Query query;
+    private String gqlQuery;
     private List<Long> ids;
 }

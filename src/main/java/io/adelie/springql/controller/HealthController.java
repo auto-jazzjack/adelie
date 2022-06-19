@@ -1,5 +1,6 @@
 package io.adelie.springql.controller;
 
+import io.adelie.springql.core.resolver.GqlParser;
 import io.adelie.springql.core.resolver.ResolverService;
 import io.adelie.springql.model.SampleRequest;
 import io.adelie.springql.model.SampleResponse;

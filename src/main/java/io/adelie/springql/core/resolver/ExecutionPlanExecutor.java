@@ -30,26 +30,36 @@ public class ExecutionPlanExecutor {
         Mono<Object> generate = executionPlan.generateMySelf().cache();
 
         Mono<Map<Object, Pair<Resolver, Object>>> collect = generate.flatMapMany(i -> {
-            if (executionPlan.getMySelf() instanceof ListResolver) {
+            if (i instanceof List) {
                 List<Object> result = (List<Object>) i;
                 Flux<Triple<Resolver, Object, Object>> tripleFlux = Flux.empty();
                 for (int k = 0; k < result.size(); k++) {
                     final int k1 = k;
                     tripleFlux = tripleFlux.concatWith(Flux.fromIterable(executionPlan.getNext().entrySet())
                             .flatMap(j -> {
-                                j.getValue().getDataFetchingEnv().setNearRoot(DataFetchingEnv.KeyValue.of(k1, result.get(k1)));
-                                //j.getValue().getDataFetchingEnv().setRoot(executionPlan.getDataFetchingEnv().getRoot());
+                                j.getValue().getDataFetchingEnv()
+                                        .setNearRoot(KeyValue.of(k1, result.get(k1)));
                                 return this.exec(j.getValue()).map(l -> Triple.of(j.getValue().getMySelf(), k1, l));
                             }));
                 }
                 return tripleFlux;
 
+            } else if (i instanceof Map){
+                Map<Object, Object> result = (Map<Object, Object>) i;
+                Flux<Triple<Resolver, Object, Object>> tripleFlux = Flux.empty();
+                for (Map.Entry<Object,Object> entry : result.entrySet()) {
+                    final Object k1 = entry.getKey();
+                    tripleFlux = tripleFlux.concatWith(Flux.fromIterable(executionPlan.getNext().entrySet())
+                            .flatMap(j -> {
+                                j.getValue().getDataFetchingEnv()
+                                        .setNearRoot(KeyValue.of(entry.getKey(), result.get(k1)));
+                                return this.exec(j.getValue()).map(l -> Triple.of(j.getValue().getMySelf(), k1, l));
+                            }));
+                }
+                return tripleFlux;
             } else {
                 return Flux.fromIterable(executionPlan.getNext().entrySet())
-                        .flatMap(j -> {
-                            //j.getValue().getDataFetchingEnv().setRoot(executionPlan.getDataFetchingEnv().getRoot());
-                            return this.exec(j.getValue()).map(l -> Triple.of(j.getValue().getMySelf(), null, l));
-                        });
+                        .flatMap(j -> this.exec(j.getValue()).map(l -> Triple.of(j.getValue().getMySelf(), null, l)));
             }
         }).collect(Collectors.toMap(Triple::getMiddle, i -> Pair.of(i.getLeft(), i.getRight())));
 
