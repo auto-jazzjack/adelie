@@ -15,7 +15,7 @@ public class ResolverService {
     private final ExecutionPlanExecutor executionPlanExecutor;
 
     public Mono<SampleResponse> exec(SampleRequest sampleRequest) {
-        ExecutionPlan generate = executionPlanGenerator.generate(sampleRequest.getQuery());
+        ExecutionPlan generate = executionPlanGenerator.generate(GqlParser.parseFrom(sampleRequest.getGqlQuery()));
         return executionPlanExecutor.exec(generate);
     }
 }
