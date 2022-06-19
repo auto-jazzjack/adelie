@@ -1,7 +1,6 @@
 package io.adelie.springql.core.resolver.impl;
 
 import io.adelie.springql.core.resolver.DataFetchingEnv;
-import io.adelie.springql.core.resolver.KeyValue;
 import io.adelie.springql.core.resolver.Resolver;
 import io.adelie.springql.model.Book;
 import io.adelie.springql.model.BookStore;
@@ -22,14 +21,15 @@ public class BookResolver implements Resolver<BookStore, List<Book>> {
 
     @Override
     public Mono<List<Book>> generate(DataFetchingEnv condition) {
-        BookStore nearRoot = (BookStore)condition.getNearRoot().getValueByKey();
+        BookStore nearRoot = (BookStore) condition.getNearRoot().getValueByKey();
+
         return Mono.just(Stream.of(
                         Book.builder()
-                                .title("hello")
+                                .title(nearRoot.getContact())
                                 .price(80000L)
                                 .build(),
                         Book.builder()
-                                .title("world")
+                                .title(nearRoot.getContact())
                                 .price(50000L)
                                 .build()
                 )

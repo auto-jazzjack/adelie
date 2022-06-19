@@ -9,18 +9,17 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class DataFetchingEnv<K, V> {
+public class DataFetchingEnv {
 
-    private KeyValue<K, V> root;
-    private KeyValue<K, V> nearRoot;
+    private KeyValue<Object, Object> root;
+    private KeyValue<Object, Object> nearRoot;
 
-
-    public DataFetchingEnv<K, V> setRoot(KeyValue<K, V> root) {
+    public DataFetchingEnv setRoot(KeyValue<Object, Object> root) {
         this.root = root;
         return this;
     }
 
-    public DataFetchingEnv<K, V> setNearRoot(KeyValue<K, V> nearRoot) {
+    public DataFetchingEnv setNearRoot(KeyValue<Object, Object> nearRoot) {
         this.nearRoot = nearRoot;
         return this;
     }
