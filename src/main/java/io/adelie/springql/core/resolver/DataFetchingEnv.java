@@ -1,61 +1,27 @@
 package io.adelie.springql.core.resolver;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
-public class DataFetchingEnv {
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class DataFetchingEnv<K, V> {
 
-    private KeyValue root;
-    private KeyValue nearRoot;
+    private KeyValue<K, V> root;
+    private KeyValue<K, V> nearRoot;
 
-    public void changeRootNode(Object key, Object value) {
 
-       /* switch (root.type) {
-            case MAP:
-            case LIST:
-                root.key = key;
-                root.value = value;
-                break;
-            default:
-                root.value = value;
-                break;
-        }*/
-
+    public DataFetchingEnv<K, V> setRoot(KeyValue<K, V> root) {
+        this.root = root;
+        return this;
     }
 
-
-    public Object getConvertedRoot() {
-       /* if (root == null) {
-            return null;
-        } else {
-            switch (root.type) {
-                case MAP:
-                    ((Map<Object, Object>) root.value).get(root.key);
-                case LIST:
-                    ((List<Object>) root.value).get((Integer) root.key);
-                case SINGLE:
-                default:
-                    return root.value;
-            }
-        }*/
-        return null;
-    }
-
-
-    @Data
-    @Builder
-    static class KeyValue {
-        private Object key;
-        private Object value;
-        //private Resolver.DataType type;
-
-        public static KeyValue of(Object key, Object value/*, Resolver.DataType type*/) {
-            return KeyValue.builder()
-                    .key(key)
-                    .value(value)
-                    //.type(type)
-                    .build();
-        }
+    public DataFetchingEnv<K, V> setNearRoot(KeyValue<K, V> nearRoot) {
+        this.nearRoot = nearRoot;
+        return this;
     }
 }
