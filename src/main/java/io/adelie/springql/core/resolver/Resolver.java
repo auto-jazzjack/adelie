@@ -14,7 +14,7 @@ public interface Resolver<Parent, Myself> {
         return Collections.emptyMap();
     }
 
-    default void preHandler(DataFetchingEnv condition) {
+    default void preHandler(Context context) {
         //do nothing
     }
 
