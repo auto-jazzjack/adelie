@@ -20,11 +20,10 @@ public class ExecutionPlanGenerator {
     private final ResolverMapper resolverMapper;
 
     public ExecutionPlan generate(Query query) {
-        ExecutionPlan generate = generate(rootResolver, query);
-        return generate;
+        return generate(rootResolver, new Context(), query);
     }
 
-    private ExecutionPlan generate(Resolver current, Query query) {
+    private ExecutionPlan generate(Resolver current, Context context, Query query) {
 
         if (current == null) {
             return null;
@@ -32,7 +31,7 @@ public class ExecutionPlanGenerator {
         ExecutionPlan executionPlan = ExecutionPlan.builder()
                 .mySelf(current)
                 .currFields(query.getFields())
-                .dataFetchingEnv(new DataFetchingEnv())
+                .dataFetchingEnv(new DataFetchingEnv().setContext(context))
                 .build();
 
         //Query resolver에서 value가 not null인 케이스를 돈다
@@ -51,7 +50,9 @@ public class ExecutionPlanGenerator {
                 .filter(i -> collect.contains(i.getKey()))
                 .map(i -> Pair.of(i.getKey(), resolverMapper.toInstant(i.getValue())))
                 .forEach(i -> {
-                    ExecutionPlan generate = generate(i.getValue(), query.getQueryByResolverName().get(i.getKey()));
+                    ExecutionPlan generate = generate(i.getValue(), context, query.getQueryByResolverName().get(i.getKey()));
+                    i.getValue().preHandler(context);
+
                     executionPlan.addNext(i.getKey(), generate);
                 });
 

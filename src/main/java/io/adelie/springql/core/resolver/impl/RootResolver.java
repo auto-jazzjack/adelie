@@ -14,6 +14,7 @@ import java.util.stream.Stream;
 @Component
 public class RootResolver implements Resolver<Void, SampleResponse> {
 
+
     @Override
     public void setData(Void unused, SampleResponse sampleResponse) {
         //do nothing
