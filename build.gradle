@@ -9,9 +9,11 @@ buildscript {
 }
 
 version = '0.0.1-SNAPSHOT'
+group = 'io.adelie'
 
 subprojects {
     apply plugin: 'java'
+    apply plugin: 'idea'
 
     sourceCompatibility = '11'
 
@@ -20,11 +22,11 @@ subprojects {
     }
 
     dependencies {
-        compileOnly('org.projectlombok:lombok:1.18.12')
-        annotationProcessor('org.projectlombok:lombok:1.18.12')
+        compileOnly('org.projectlombok:lombok:1.18.24')
+        annotationProcessor('org.projectlombok:lombok:1.18.24')
 
-        testCompileOnly 'org.projectlombok:lombok:1.18.12'
-        testAnnotationProcessor('org.projectlombok:lombok:1.18.12')
+        testCompileOnly 'org.projectlombok:lombok:1.18.24'
+        testAnnotationProcessor('org.projectlombok:lombok:1.18.24')
     }
 
 }

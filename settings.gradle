@@ -1,3 +1,4 @@
 rootProject.name = 'adelie'
 
 include 'adelie-admin'
+include 'adelie-domain'
