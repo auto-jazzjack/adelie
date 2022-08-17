@@ -14,7 +14,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class EService {
+public class EService extends BaseTimeEntity {
 
     @Id
     @GeneratedValue

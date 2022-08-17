@@ -8,4 +8,5 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class ServiceCreateRequest {
+    private String serviceName;
 }

@@ -13,6 +13,12 @@ public class EServiceService {
     private final EServiceRepository eServiceRepository;
 
     public EService createService(ServiceCreateRequest serviceCreateRequest) {
-        return eServiceRepository.save(EService.builder().build());
+        return eServiceRepository.save(EService.builder()
+                .serviceName(serviceCreateRequest.getServiceName())
+                .build());
+    }
+
+    public EService getService(String serviceName) {
+        return eServiceRepository.findByServiceName(serviceName);
     }
 }
