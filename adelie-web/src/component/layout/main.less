@@ -1,0 +1,16 @@
+.MainLayout{
+    display: flex;
+    
+    > aside {
+        position: relative;
+        width: 60px;
+    }
+
+    > main {
+        flex-grow: 1;
+        padding: 0 2rem;
+        > * {
+            overflow: auto;
+        }
+    }
+}
