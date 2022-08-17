@@ -1,36 +1,30 @@
-plugins {
-    id 'org.springframework.boot' version '2.7.0'
-    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
-    id 'java'
-}
+buildscript {
+    ext {
+        spring_version = "2.4.0"
+    }
 
-group = 'io.adelie'
-version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '11'
-
-configurations {
-    compileOnly {
-        extendsFrom annotationProcessor
+    repositories {
+        mavenCentral()
     }
 }
 
-repositories {
-    mavenCentral()
-}
+version = '0.0.1-SNAPSHOT'
 
-dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter'
-    implementation 'org.springframework.boot:spring-boot-starter-web'
+subprojects {
+    apply plugin: 'java'
 
-    implementation 'io.projectreactor:reactor-core:3.4.12'
+    sourceCompatibility = '11'
 
+    repositories {
+        mavenCentral()
+    }
 
-    compileOnly 'org.projectlombok:lombok'
-    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
-    annotationProcessor 'org.projectlombok:lombok'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
-}
+    dependencies {
+        compileOnly('org.projectlombok:lombok:1.18.12')
+        annotationProcessor('org.projectlombok:lombok:1.18.12')
 
-tasks.named('test') {
-    useJUnitPlatform()
+        testCompileOnly 'org.projectlombok:lombok:1.18.12'
+        testAnnotationProcessor('org.projectlombok:lombok:1.18.12')
+    }
+
 }
