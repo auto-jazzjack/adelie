@@ -7,4 +7,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface EServiceRepository extends CrudRepository<EService, Long> {
 
+    EService findByServiceName(String serviceName);
 }

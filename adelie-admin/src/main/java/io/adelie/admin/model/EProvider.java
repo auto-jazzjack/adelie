@@ -15,7 +15,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class EProvider {
+public class EProvider extends BaseTimeEntity {
 
     @Id
     @GeneratedValue

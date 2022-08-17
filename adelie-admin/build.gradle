@@ -1,15 +1,15 @@
 plugins {
     id 'org.springframework.boot' version "${spring_version}"
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
-    id 'java'
 }
 
 dependencies {
-    compileOnly('org.projectlombok:lombok:1.18.12')
-    annotationProcessor('org.projectlombok:lombok:1.18.12')
+    implementation project(":adelie-domain")
+    //compileOnly("org.projectlombok:lombok:1.18.24")
+    annotationProcessor('org.projectlombok:lombok:1.18.24')
 
-    testCompileOnly 'org.projectlombok:lombok:1.18.12'
-    testAnnotationProcessor('org.projectlombok:lombok:1.18.12')
+    testCompileOnly 'org.projectlombok:lombok:1.18.24'
+    testAnnotationProcessor('org.projectlombok:lombok:1.18.24')
 
     implementation 'org.springframework.boot:spring-boot-starter-web'
     compileOnly 'org.projectlombok:lombok:1.18.12'

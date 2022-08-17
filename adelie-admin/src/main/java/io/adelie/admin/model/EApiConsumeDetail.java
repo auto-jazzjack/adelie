@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.boot.model.relational.Loggable;
 
 import javax.persistence.*;
 
@@ -14,7 +15,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class EApiConsumeDetail {
+public class EApiConsumeDetail extends BaseTimeEntity  {
 
     @Id
     @GeneratedValue

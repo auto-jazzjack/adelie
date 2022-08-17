@@ -17,7 +17,7 @@ import javax.persistence.Table;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class EConsumer {
+public class EConsumer extends BaseTimeEntity {
 
     @Id
     @GeneratedValue

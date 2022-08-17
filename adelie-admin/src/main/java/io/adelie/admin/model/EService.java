@@ -1,20 +1,18 @@
 package io.adelie.admin.model;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Table
 @Entity
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class EService {
+public class EService extends BaseTimeEntity {
 
     @Id
     @GeneratedValue

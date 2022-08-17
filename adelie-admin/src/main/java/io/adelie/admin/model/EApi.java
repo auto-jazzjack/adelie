@@ -15,7 +15,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class EApi {
+public class EApi extends BaseTimeEntity {
 
     @Id
     @GeneratedValue
