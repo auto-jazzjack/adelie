@@ -1,7 +1,6 @@
 import './App.css';
 import store, {history} from '../store/store';
 
-import React from 'react';
 import {Provider} from 'react-redux';
 import {Route, Switch} from 'react-router';
 //import {Editor} from './comunicate/http';
@@ -14,7 +13,7 @@ function App() {
         <Provider store={store}>
             <ConnectedRouter history={history}>
                 <Switch>
-                    <Route component={Main} />
+                    <Route component={Main}/>
                 </Switch>
             </ConnectedRouter>
         </Provider>

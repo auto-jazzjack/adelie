@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   Container, Dropdown, Image, Menu
 } from 'semantic-ui-react';
