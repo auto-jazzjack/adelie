@@ -8,4 +8,6 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class ServiceCreateResponse {
+    private Long serviceId;
+    private String serviceName;
 }
