@@ -12,4 +12,6 @@ import lombok.NoArgsConstructor;
 public class ServiceCreateResponse {
     private Long serviceId;
     private String serviceName;
+    private String createAt;
+    private String updatedAt;
 }
