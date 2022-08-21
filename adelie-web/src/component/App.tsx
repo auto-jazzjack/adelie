@@ -3,9 +3,10 @@ import store, {history} from '../store/store';
 
 import {Provider} from 'react-redux';
 import {Route, Switch} from 'react-router';
-//import {Editor} from './comunicate/http';
+//import {Project} from './comunicate/http';
 import {ConnectedRouter} from 'connected-react-router';
 import Main from "./layout/Main";
+import {Project} from "./project";
 
 
 function App() {
@@ -13,7 +14,8 @@ function App() {
         <Provider store={store}>
             <ConnectedRouter history={history}>
                 <Switch>
-                    <Route component={Main}/>
+                    <Route component={Main} path="/" exact/>
+                    <Route component={Project} path="/project" exact/>
                 </Switch>
             </ConnectedRouter>
         </Provider>

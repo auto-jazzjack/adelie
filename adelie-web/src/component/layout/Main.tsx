@@ -1,12 +1,11 @@
-import React from 'react';
-
 import './main.less'
 import Insidebar from './in-sidebar/in-sidebar';
 import InSection from './in-section/in-section'
 import InHeader from './header/in-header'
 import InFooter from './footer/footer'
-import Http from "../comunicate/http/http";
-//import {Editor} from "../comunicate/http";
+import * as Http from "http";
+import React from "react";
+//import {Project} from "../comunicate/http";
 //import Header from './header/header';
 
 
@@ -18,7 +17,7 @@ const MainLayout: React.FC = () => {
         <div>
             <InHeader/>
             <Insidebar/>
-            <InSection children={Http()}/>
+            <InSection children={Http}/>
             <InFooter/>
         </div>
     );
