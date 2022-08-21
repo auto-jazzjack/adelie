@@ -3,12 +3,12 @@ import store, {history} from '../store/store';
 
 import {Provider} from 'react-redux';
 import {Route, Switch} from 'react-router';
-import {ConnectedRouter} from 'connected-react-router';
 import InHeader from "./layout/header/in-header";
 import Footer from "./layout/footer/footer";
 import {Http} from "./comunicate/http";
 import {Project} from "./project";
 import {Container, Segment} from 'semantic-ui-react';
+import {ConnectedRouter} from "connected-react-router";
 
 function App() {
     return (
