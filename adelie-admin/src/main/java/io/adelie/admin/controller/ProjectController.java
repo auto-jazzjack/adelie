@@ -2,8 +2,8 @@ package io.adelie.admin.controller;
 
 import io.adelie.admin.model.EProject;
 import io.adelie.admin.service.EProjectService;
-import io.adelie.domain.project.ProjectCreateRequest;
 import io.adelie.domain.project.ProjectCreateResponse;
+import io.adelie.domain.project.ProjectNameRequest;
 import io.adelie.domain.project.ProjectSearchResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +23,7 @@ public class ProjectController {
     private final EProjectService eProjectService;
 
     @PostMapping(path = "", consumes = "application/json", produces = "application/json")
-    public ProjectCreateResponse createProject(@RequestBody ProjectCreateRequest serviceCreateRequest) {
+    public ProjectCreateResponse createProject(@RequestBody ProjectNameRequest serviceCreateRequest) {
         return to(eProjectService.createProject(serviceCreateRequest));
     }
 
@@ -42,9 +42,7 @@ public class ProjectController {
 
     @GetMapping(path = "/all", produces = "application/json")
     public Page<ProjectSearchResponse> getAllProject(
-            @PageableDefault(size = 15, sort = "projectName") Pageable pageable
-    ) {
-
+            @PageableDefault(size = 15, sort = "projectName") Pageable pageable) {
         return eProjectService.getAllProject(pageable)
                 .map(j -> ProjectSearchResponse.builder()
                         .projectId(j.getProjectId())
@@ -52,7 +50,11 @@ public class ProjectController {
                         .createAt(j.getCreatedAt().toString())
                         .updatedAt(j.getUpdatedAt().toString())
                         .build());
+    }
 
+    @DeleteMapping(path = "", consumes = "application/json", produces = "application/json")
+    public boolean deleteProject(@RequestParam(name = "projectName") String projectName) {
+        return eProjectService.deleteProject(projectName);
     }
 
     private static ProjectCreateResponse to(EProject eProjectService) {

@@ -18,6 +18,10 @@ public class EProject extends BaseTimeEntity {
     @GeneratedValue
     private Long projectId;
 
+    @Column(
+            nullable = false,
+            unique = true
+    )
     private String projectName;
 
     @OneToOne(fetch = FetchType.LAZY)
