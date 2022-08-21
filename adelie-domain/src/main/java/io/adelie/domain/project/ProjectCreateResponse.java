@@ -1,4 +1,4 @@
-package io.adelie.domain.service;
+package io.adelie.domain.project;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,9 +9,9 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ServiceCreateResponse {
-    private Long serviceId;
-    private String serviceName;
+public class ProjectCreateResponse {
+    private Long projectId;
+    private String projectName;
     private String createAt;
     private String updatedAt;
 }

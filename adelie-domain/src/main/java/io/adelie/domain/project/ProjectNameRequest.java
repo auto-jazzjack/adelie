@@ -1,4 +1,4 @@
-package io.adelie.domain.service;
+package io.adelie.domain.project;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,6 +9,6 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ServiceCreateRequest {
-    private String serviceName;
+public class ProjectNameRequest {
+    private String projectName;
 }

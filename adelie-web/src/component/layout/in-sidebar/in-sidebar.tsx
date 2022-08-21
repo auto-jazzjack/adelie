@@ -15,38 +15,7 @@ const Insidebar: React.FC = () => {
     /* Renderer */
     return (
         <div>
-{/*            {<Sidebar inverted vertical visible width='thin' fixed='left'>
-                <Menu.Item as='a'>
-                    <Icon name='home'/>
-                    Home
-                </Menu.Item>
-
-            </Sidebar>}*/}
         </div>
-
-        /*{ <Sidebar
-          as={Menu}
-          animation='overlay'
-          icon='labeled'
-          inverted
-          vertical
-          visible
-          width='thin'
-        >
-          <Menu.Item as='a'>
-            <Icon name='home' />
-            Home
-          </Menu.Item>
-          <Menu.Item as='a'>
-            <Icon name='gamepad' />
-            Games
-          </Menu.Item>
-          <Menu.Item as='a'>
-            <Icon name='camera' />
-            Channels
-          </Menu.Item>
-        </Sidebar> }*/
-
     );
 }
 

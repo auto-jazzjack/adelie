@@ -23,5 +23,5 @@ public class EConsumer extends BaseTimeEntity {
     @GeneratedValue
     private Long consumerId;
 
-    private Long serviceId;
+    private Long projectId;
 }

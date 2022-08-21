@@ -1,5 +1,6 @@
 import axios, {AxiosError, AxiosPromise} from "axios";
 import {ApiStatus, Error} from "./type";
+import React from "react";
 
 export const apiCaller = axios.create()
 
