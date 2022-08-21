@@ -1,19 +1,17 @@
-import {Container, Image, Menu} from 'semantic-ui-react';
+import {Image, Menu} from 'semantic-ui-react';
 import './in-header.less';
-import {NavLink} from "react-router-dom";
 
 const InHeader = () => {
     return (
         <div>
-            <Menu fixed='top' inverted>
-                <Container>
+
+                <Menu fixed='top' inverted>
 
                     <Menu.Item as='a' header to="/"><Image size='mini' src='/logo192.png'
                                                            style={{marginRight: '1.5em'}}/>Home</Menu.Item>
-                    <Menu.Item as={NavLink} to="/project">
-                    </Menu.Item>
-                </Container>
-            </Menu>
+                    <Menu.Item as='a' header to="/project">Manage Project</Menu.Item>
+                </Menu>
+
         </div>
 
     );
