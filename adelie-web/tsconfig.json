@@ -1,13 +1,7 @@
 {
   "compilerOptions": {
-    "target": "es5",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
     "esModuleInterop": false,
-    "jsx": "react-jsx"
+    "jsx": "react"
   },
   "extends": "./node_modules/react-redux-typescript-scripts/tsconfig.json",
   "include": [

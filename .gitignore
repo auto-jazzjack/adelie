@@ -37,3 +37,4 @@ out/
 .vscode/
 
 ./adelie-web/node_modules
+./adelie-web/package-lock.json

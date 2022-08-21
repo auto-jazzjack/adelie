@@ -1,5 +1,6 @@
 import {Header} from "semantic-ui-react";
 import {Editor} from "../../editor";
+import React from 'react';
 
 /*type Http1Request = {
     method: string;

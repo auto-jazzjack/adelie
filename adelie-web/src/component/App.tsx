@@ -9,6 +9,7 @@ import {Http} from "./comunicate/http";
 import {Project} from "./project";
 import {Container, Segment} from 'semantic-ui-react';
 import {ConnectedRouter} from "connected-react-router";
+import React from 'react';
 
 function App() {
     return (
