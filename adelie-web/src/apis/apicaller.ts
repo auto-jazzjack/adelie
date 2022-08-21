@@ -4,6 +4,7 @@ import React from "react";
 
 export const apiCaller = axios.create()
 
+
 export function initStatus<T>(): ApiStatus<T> {
     return {
         loading: true
@@ -33,7 +34,7 @@ function errorGenerator(error: AxiosError | null): Error {
 
 }
 
-export function fetcher<T>(result: AxiosPromise<T>, stateUpdater: React.Dispatch<React.SetStateAction<ApiStatus<T>>>) {
+export function fetcher<T>(result: AxiosPromise<T | undefined>, stateUpdater: React.Dispatch<React.SetStateAction<ApiStatus<T> | undefined>>) {
 
     result
         .then(res => {

@@ -3,23 +3,27 @@ import store, {history} from '../store/store';
 
 import {Provider} from 'react-redux';
 import {Route, Switch} from 'react-router';
-//import {Project} from './comunicate/http';
 import {ConnectedRouter} from 'connected-react-router';
-import MainLayout from "./layout/MainLayout";
-import {Project} from "./project";
+import InHeader from "./layout/header/in-header";
+import Footer from "./layout/footer/footer";
 import {Http} from "./comunicate/http";
-
-//import {Http} from "./comunicate/http";
-
+import {Project} from "./project";
+import {Container, Segment} from 'semantic-ui-react';
 
 function App() {
     return (
         <Provider store={store}>
             <ConnectedRouter history={history}>
-                <Switch>
-                    <Route render={() => <MainLayout node={Http()}/>} path="/" exact/>
-                    <Route render={() => <MainLayout node={Project()}/>} path="/project" exact/>
-                </Switch>
+                <InHeader/>
+                <Segment style={{margin: '3em 0em 0em', padding: '5em 0em'}}>
+                    <Container text style={{marginTop: '7em'}}>
+                        <Switch>
+                            <Route component={Http} path="/" exact/>
+                            <Route component={Project} path="/project" exact/>
+                        </Switch>
+                    </Container>
+                </Segment>
+                <Footer/>
             </ConnectedRouter>
         </Provider>
     );
