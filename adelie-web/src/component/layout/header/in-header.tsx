@@ -1,20 +1,16 @@
-import {Image, Menu} from 'semantic-ui-react';
+import {Image, Menu, MenuItem} from 'semantic-ui-react';
 import './in-header.less';
-import {Link, NavLink} from "react-router-dom";
+import {NavLink} from "react-router-dom";
 import React from 'react';
 
-const InHeader = () => {
+const InHeader: React.FC = () => {
     return (
-        <div>
-            <Link to='/'>dasdasd</Link>
-            <Menu fixed='top' inverted>
-                <Menu.Item as='a' name="home" header to='/'><Image size='mini' src='/logo192.png'
-                                                                   style={{marginRight: '1.5em'}}/>Home</Menu.Item>
-                <Menu.Item as={NavLink} name="Manage Project" header to='/project'/>
-            </Menu>
-        </div>
-
-    );
+        <Menu fixed='top' inverted>
+            <MenuItem as={NavLink} to="/">
+                <Image size='mini' src='/logo192.png' style={{marginRight: '1.5em'}}/>Home
+            </MenuItem>
+            <MenuItem as={NavLink} to="/project">Manage Project</MenuItem>
+        </Menu>);
 }
 
 /* Exports */
