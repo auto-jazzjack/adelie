@@ -9,6 +9,9 @@ import "./project.less"
 import {Button} from "semantic-ui-react";
 
 export const Project = () => {
+
+    //fetch all project list and render it
+
     return (
         <div className="Project">
             <Button.Group floated="right">

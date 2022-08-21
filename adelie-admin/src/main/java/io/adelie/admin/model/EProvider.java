@@ -21,7 +21,7 @@ public class EProvider extends BaseTimeEntity {
     @GeneratedValue
     private Long providerId;
 
-    private Long serviceId;
+    private Long projectId;
 
     @OneToMany
     @JoinColumn(name = "providerId")

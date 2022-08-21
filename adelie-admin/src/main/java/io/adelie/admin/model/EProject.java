@@ -12,20 +12,20 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class EService extends BaseTimeEntity {
+public class EProject extends BaseTimeEntity {
 
     @Id
     @GeneratedValue
-    private Long serviceId;
+    private Long projectId;
 
-    private String serviceName;
+    private String projectName;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "serviceId")
+    @JoinColumn(name = "projectId")
     private EProvider eProvider;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "serviceId")
+    @JoinColumn(name = "projectId")
     private EConsumer eConsumer;
 
 }
