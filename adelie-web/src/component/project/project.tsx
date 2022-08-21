@@ -3,15 +3,13 @@ import {Button} from "semantic-ui-react";
 import {getAllProject} from "../../apis/project/project";
 import {fetcher} from "../../apis/apicaller";
 import React from "react";
-import {ProjectSearchResponse} from "../common/project/project";
 
 
 export const Project = () => {
 
-    const [projects, setProjects] = React.useState<ProjectSearchResponse[]>()
 
-
-    fetcher(getAllProject(), setProjects)
+    const [projects, setProjects] = React.useState([])
+    fetcher(getAllProject(), () => setProjects)
 
     //fetch all project list and render it
 
