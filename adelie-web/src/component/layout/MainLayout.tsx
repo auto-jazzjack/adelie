@@ -2,24 +2,27 @@ import './main.less'
 import Insidebar from './in-sidebar/in-sidebar';
 import InSection from './in-section/in-section'
 import InHeader from './header/in-header'
-import InFooter from './footer/footer'
-import * as Http from "http";
-import React from "react";
+import {ReactNode} from "react";
+import Footer from  './footer/footer'
 //import {Project} from "../comunicate/http";
 //import Header from './header/header';
 
+type MainLayoutProps = {
+    node: ReactNode
+}
 
-/* Main Compoent */
-const MainLayout: React.FC = () => {
+/* Main */
+const MainLayout = (props: MainLayoutProps) => {
 
     /* Renderer */
     return (
         <div>
             <InHeader/>
             <Insidebar/>
-            <InSection children={Http}/>
-            <InFooter/>
+            <InSection children={props.node}/>
+            <Footer/>
         </div>
+
     );
 }
 

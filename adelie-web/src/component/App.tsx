@@ -5,8 +5,11 @@ import {Provider} from 'react-redux';
 import {Route, Switch} from 'react-router';
 //import {Project} from './comunicate/http';
 import {ConnectedRouter} from 'connected-react-router';
-import Main from "./layout/Main";
+import MainLayout from "./layout/MainLayout";
 import {Project} from "./project";
+import {Http} from "./comunicate/http";
+
+//import {Http} from "./comunicate/http";
 
 
 function App() {
@@ -14,8 +17,8 @@ function App() {
         <Provider store={store}>
             <ConnectedRouter history={history}>
                 <Switch>
-                    <Route component={Main} path="/" exact/>
-                    <Route component={Project} path="/project" exact/>
+                    <Route render={() => <MainLayout node={Http()}/>} path="/" exact/>
+                    <Route render={() => <MainLayout node={Project()}/>} path="/project" exact/>
                 </Switch>
             </ConnectedRouter>
         </Provider>
