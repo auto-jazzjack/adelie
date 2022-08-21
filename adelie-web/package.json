@@ -70,5 +70,6 @@
   "description": "This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).",
   "main": "craco.config.js",
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "proxy": "http://localhost:10001"
 }
