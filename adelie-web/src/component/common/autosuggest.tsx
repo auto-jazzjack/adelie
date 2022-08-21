@@ -23,7 +23,7 @@ export const AutoSuggest = ({names, indent, consumer}: SuggestProps) => {
             } as DropdownItemProps))}
             onChange={(event: React.SyntheticEvent<HTMLElement>, data: DropdownProps) => {
 
-                consumer.call(this, {
+                consumer.call(null, {
                     key: data.value as string,
                     value: indent
                 })

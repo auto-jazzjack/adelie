@@ -1,6 +1,7 @@
 import {Image, Menu} from 'semantic-ui-react';
 import './in-header.less';
 import {Link, NavLink} from "react-router-dom";
+import React from 'react';
 
 const InHeader = () => {
     return (

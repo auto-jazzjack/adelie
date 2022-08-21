@@ -1,5 +1,6 @@
 import {Container, Divider, Grid, Header, Image, List, Segment} from 'semantic-ui-react';
 import './footer.less';
+import React from 'react';
 
 const Footer = () => {
     /* Renderer */

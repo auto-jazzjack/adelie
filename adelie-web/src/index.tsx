@@ -3,6 +3,7 @@ import './index.css';
 import App from './component/App';
 import reportWebVitals from './reportWebVitals';
 import 'semantic-ui-less/semantic.less'
+import React from 'react';
 
 ReactDOM.render(
   <App />,
